@@ -2,8 +2,8 @@ package com.cardealership.service;
 
 import com.cardealership.dao.DAOUtilities;
 import com.cardealership.dao.UserDao;
-import com.cardealership.model.AccountType;
-import com.cardealership.model.User;
+import com.cardealership.model.user.AccountType;
+import com.cardealership.model.user.User;
 
 import java.util.Optional;
 
@@ -23,24 +23,6 @@ public class UserService {
         return false;
     }
 
-    public boolean addUser(User user){
-        try{
-            userDao.create(user);
-            return true;
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public void updateUser(User user){
-        try{
-            userDao.update(user);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-    }
-
     public void convertUser(User user, AccountType accountType){
         user.setAccountType(accountType);
         try{
@@ -55,6 +37,23 @@ public class UserService {
         return result.orElse(null);
     }
 
+    private boolean addUser(User user){
+        try{
+            userDao.create(user);
+            return true;
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void updateUser(User user){
+        try{
+            userDao.update(user);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
     private Optional<User> validate(String email, String password){
         try{

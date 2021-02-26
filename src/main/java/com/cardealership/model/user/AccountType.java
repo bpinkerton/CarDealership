@@ -1,4 +1,4 @@
-package com.cardealership.model;
+package com.cardealership.model.user;
 
 public enum AccountType {
 

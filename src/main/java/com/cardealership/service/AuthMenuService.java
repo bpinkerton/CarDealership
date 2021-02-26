@@ -1,48 +1,40 @@
 package com.cardealership.service;
 
-import com.cardealership.model.AccountType;
-import com.cardealership.model.User;
+import com.cardealership.model.user.AccountType;
+import com.cardealership.model.user.User;
 
 import java.util.Scanner;
 
-public class MenuService {
+public class AuthMenuService {
     static User currentUser; // static currentUser to store the user session
-    static Scanner scan = new Scanner(System.in);
-    UserService userService = new UserService();
+    static Scanner scan;
+    UserService userService;
 
-    public MenuService(){
-        currentUser = new User();
-    }
+    public AuthMenuService(){ currentUser = new User(); scan = new Scanner(System.in); userService = new UserService(); }
 
-
-
-    public void MainMenu(){
+    public void mainMenu(){
         System.out.println("------  Welcome to Car Dealership!  ------");
-        MenuDriver();
+        menuDriver();
     }
 
     /**
      * MenuDriver() should act as a constant driver for menu serving
      */
-    public void MenuDriver(){
-        if(!currentUser.getAccountType().equals(AccountType.UNREGISTERED))
-            System.out.println("\t\t\tHello, " + currentUser.getFirstName() +"!");
-
-        System.out.println("\t\tWhat would you like to do?");
+    public void menuDriver(){
         switch (currentUser.getAccountType()){
             case UNREGISTERED:  registrationMenu();
                 break;
             case USER:          userMenu();
                 break;
-            case CUSTOMER:      customerMenu();
-                break;
-            case EMPLOYEE:      employeeMenu();
+            case CUSTOMER:
+            case EMPLOYEE:      new CarMenuService(currentUser,scan).mainMenu();
                 break;
         }
-        MenuDriver(); // uncomment this line when you are ready for recursion :D
+        menuDriver(); // uncomment this line when you are ready for recursion :D
     }
 
     private void registrationMenu() {
+        System.out.println("\t\tWhat would you like to do?");
         System.out.println("\t\t\t1) Register");
         System.out.println("\t\t\t2) Login");
         System.out.println("\t\t\t0) Exit");
@@ -57,6 +49,7 @@ public class MenuService {
     }
 
     private void userMenu() {
+        System.out.println("\t\tWhat would you like to do?");
         System.out.println("\t\t\t1) Register for Customer Account");
         System.out.println("\t\t\t2) Register for Employee Account");
         System.out.println("\t\t\t0) Exit");
@@ -71,21 +64,11 @@ public class MenuService {
     }
 
     private void customerMenu() {
-        System.out.println("\t\t\t1) View Dealership Cars"); // bidding functionality extracted to a CarMenuService
-        System.out.println("\t\t\t2) View My Cars");    // view ownership and payments in CarMenuService
-        System.out.println("\t\t\t0) Exit");
-        switch(scan.nextLine()){
-            case "0": logOut();
-                break;
-        }
+
     }
 
     private void employeeMenu() {
-        System.out.println("\t\t\t0) Exit");
-        switch(scan.nextLine()){
-            case "0": logOut();
-                break;
-        }
+
     }
 
     private void register(){
@@ -120,6 +103,7 @@ public class MenuService {
             password = scan.nextLine();
         } while(!login(email,password));
         System.out.println("\t\tLogged in successfully.");
+        System.out.println("\t\t\tHello, " + currentUser.getFirstName() +"!");
     }
 
     private boolean login(String email, String password){

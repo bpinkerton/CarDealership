@@ -12,10 +12,16 @@ public class DAOUtilities {
 
     private static Connection connection;
     private static UserDao userDao;
+    private static CarDao carDao;
 
     public static UserDao getUserDao(){
         if(userDao == null) userDao = new UserDao();
         return userDao;
+    }
+
+    public static CarDao getCarDao(){
+        if(carDao == null) carDao = new CarDao();
+        return carDao;
     }
 
     static synchronized Connection getConnection() throws SQLException {

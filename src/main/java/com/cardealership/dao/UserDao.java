@@ -1,8 +1,7 @@
 package com.cardealership.dao;
 
-import com.cardealership.model.AccountType;
-import com.cardealership.model.User;
-import org.postgresql.util.PSQLException;
+import com.cardealership.model.user.AccountType;
+import com.cardealership.model.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
