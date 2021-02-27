@@ -39,3 +39,4 @@ We want to see that you can meet deadlines and that you can code. You are expect
 * DAO Design pattern:  Decouple the data access layer from the business layer.
 * Service Layer: Abstract the business logic into organized services.
 * Password Encryption: Secure password storage.
+* DealershipList: Custom LinkedList data structure.
