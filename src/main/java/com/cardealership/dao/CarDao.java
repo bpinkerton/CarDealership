@@ -15,12 +15,11 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CarDao implements Dao<Car> {
-    //TODO: implement GET ALL methods for multiple search terms (make,model,year,price,ownership)
+    //TODO: implement UPDATE methods for multiple search terms (make,model,year,price,ownership)
     @Override
-    public Optional<Car> get(long id) throws Exception {
+    public Optional<Car> get(long id){
         Connection connection = null;
         PreparedStatement stmt = null;
-        int success = 0;
 
         try{
             connection = DAOUtilities.getConnection();
@@ -59,10 +58,9 @@ public class CarDao implements Dao<Car> {
         return Optional.empty();
     }
 
-    public Optional<DealershipList<Car>> getAll() throws Exception{
+    public Optional<DealershipList<Car>> getAll(){
         Connection connection = null;
         PreparedStatement stmt = null;
-        int success = 0;
         DealershipList<Car> cars = new DealershipList<>();
 
         try{
@@ -102,10 +100,9 @@ public class CarDao implements Dao<Car> {
         return Optional.empty();
     }
 
-    public Optional<DealershipList<Car>> getAll(CarSearchQuery conditions) throws Exception {
+    public Optional<DealershipList<Car>> getAll(CarSearchQuery conditions){
         Connection connection = null;
         PreparedStatement stmt = null;
-        int success = 0;
         DealershipList<Car> cars = new DealershipList<>();
 
         try{
