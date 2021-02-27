@@ -114,10 +114,21 @@ public class Car {
 
     @Override
     public String toString() {
-        return  "id=" + id +
+        if(this.ownership.equals(Ownership.UNOWNED))
+            return  "id=" + id +
                 ", make='" + make + '\'' +
                 ", model='" + model + '\'' +
                 ", year='" + year + '\'' +
                 ", price=" + price;
+        else
+            return  "id=" + id +
+                    ", ownership='" + ownership + '\'' +
+                    ", make='" + make + '\'' +
+                    ", model='" + model + '\'' +
+                    ", year='" + year + '\'' +
+                    ", price=$" + price +
+                    ", balance=$" + balanceRemaining +
+                    ", financing='" + financingType + '\'';
+
     }
 }

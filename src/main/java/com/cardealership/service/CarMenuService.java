@@ -2,6 +2,7 @@ package com.cardealership.service;
 
 import com.cardealership.model.user.User;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class CarMenuService {
