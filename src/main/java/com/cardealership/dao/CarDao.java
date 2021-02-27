@@ -5,6 +5,7 @@ import com.cardealership.model.car.FinancingType;
 import com.cardealership.model.car.Ownership;
 import com.cardealership.model.user.AccountType;
 import com.cardealership.model.user.User;
+import com.cardealership.util.DealershipList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,6 +41,49 @@ public class CarDao implements Dao<Car> {
                         FinancingType.valueOf(rs.getString("financingtype"))
                 ));
             }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt!=null) {
+                    stmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<DealershipList<Car>> getAll() throws Exception{
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        int success = 0;
+        DealershipList<Car> cars = new DealershipList<>();
+
+        try{
+            connection = DAOUtilities.getConnection();
+            String sql = "SELECT * FROM CARS";
+            stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                cars.add(new Car(
+                        rs.getLong("id"),
+                        rs.getLong("userid"),
+                        Ownership.valueOf(rs.getString("ownership")),
+                        rs.getString("make"),
+                        rs.getString("model"),
+                        rs.getString("year"),
+                        rs.getDouble("price"),
+                        rs.getDouble("balanceremaining"),
+                        FinancingType.valueOf(rs.getString("financingtype"))
+                ));
+            }
+            return Optional.of(cars);
         }catch(SQLException e) {
             e.printStackTrace();
         } finally {

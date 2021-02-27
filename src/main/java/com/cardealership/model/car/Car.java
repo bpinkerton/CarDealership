@@ -115,20 +115,40 @@ public class Car {
     @Override
     public String toString() {
         if(this.ownership.equals(Ownership.UNOWNED))
-            return  "id=" + id +
-                ", make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", year='" + year + '\'' +
-                ", price=" + price;
+            return String.format("" +
+                    "id= '%d'\t\t" +
+                    "ownership = '%s'\t\t" +
+                    "make= '%s'\t\t" +
+                    "model= '%s'\t\t" +
+                    "year= '%s'\t\t" +
+                    "price= $%.2f\t\t"
+                    , id, ownership, make, model, year, price
+            );
+            //            "id=" + id +
+//                ",\t make='" + make + '\'' +
+//                ",\t model='" + model + '\'' +
+//                ",\t year='" + year + '\'' +
+//                ",\t price=" + price;
         else
-            return  "id=" + id +
-                    ", ownership='" + ownership + '\'' +
-                    ", make='" + make + '\'' +
-                    ", model='" + model + '\'' +
-                    ", year='" + year + '\'' +
-                    ", price=$" + price +
-                    ", balance=$" + balanceRemaining +
-                    ", financing='" + financingType + '\'';
+            return  String.format("" +
+                    "id= '%d'\t\t" +
+                    "ownership = '%s'\t\t\t" +
+                    "make= '%s'\t\t" +
+                    "model= '%s'\t\t" +
+                    "year= '%s'\t\t" +
+                    "price= $%.2f\t\t" +
+                    "balance= $%.2f\t\t" +
+                    "financing= '%s'"
+                    , id, ownership, make, model, year, price, balanceRemaining, financingType
+            );
+//                    "id=" + id +
+//                    ",\t ownership='" + ownership + '\'' +
+//                    ",\t make='" + make + '\'' +
+//                    ",\t model='" + model + '\'' +
+//                    ",\t year='" + year + '\'' +
+//                    ",\t price=$" + price +
+//                    ",\t balance=$" + balanceRemaining +
+//                    ",\t financing='" + financingType + '\'';
 
     }
 }
