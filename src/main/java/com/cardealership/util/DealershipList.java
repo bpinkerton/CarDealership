@@ -1,9 +1,5 @@
 package com.cardealership.util;
 
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-
 public class DealershipList <E>{
     private int size = 0;
 
@@ -21,13 +17,12 @@ public class DealershipList <E>{
     //public methods
     public int size(){ return size; }
 
-    public boolean add(E e){
+    public void add(E e){
         linkLast(e);                // add the new element to the end of the list
-        return true;
     }
 
-    public boolean addAll(E[] array){
-        return addAll(size, array);
+    public void addAll(E[] array){
+        addAll(size, array);
     }
 
     @Override
@@ -47,7 +42,7 @@ public class DealershipList <E>{
     // private methods
     private void linkLast(E e){
         final Node<E> l = last;
-        final Node<E> newNode = new Node<>(l,e,null); // create new node with last as their prev
+        final Node<E> newNode = new Node<>(l, e, null); // create new node with last as their prev
         last = newNode;             // set newNode to be the last element
         if (l == null)              // check to see if the list was empty
             first = newNode;        // if so, newNode is also the first node as well as the last
@@ -56,10 +51,10 @@ public class DealershipList <E>{
         size++;
     }
 
-    private boolean addAll(int index, E[] array){
+    private void addAll(int index, E[] array){
         int numNew = array.length;
         if (0 == numNew)            //Yoda programming. Return false if array is size 0 and has no elements
-            return false;
+            return;
 
         Node<E> pred, succ;         //predecessor and successor
         if (index == size){         // add to the end of the list
@@ -87,10 +82,9 @@ public class DealershipList <E>{
             succ.prev = pred;
         }
         size += numNew;             // increment the size by the number of elements added
-        return true;
     }
 
-    private class Node<E>{
+    private static class Node<E>{
         E data;
         Node<E> next;
         Node<E> prev;

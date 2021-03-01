@@ -90,7 +90,7 @@ public class AuthMenuService {
 
     private void register(AccountType accountType){
         userService.convertUser(currentUser,accountType);
-        refreshSesssion();
+        refreshSession();
     }
 
     private void loginMenu() {
@@ -110,8 +110,8 @@ public class AuthMenuService {
         return (currentUser = userService.logIn(email,password)) != null;
     }
 
-    private boolean refreshSesssion(){
-        return (currentUser = userService.logIn(currentUser.getEmail(), currentUser.getPassword())) != null;
+    private void refreshSession(){
+        currentUser = userService.logIn(currentUser.getEmail(), currentUser.getPassword());
     }
 
     private void logOut(){

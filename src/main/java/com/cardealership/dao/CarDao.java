@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.Optional;
 
 public class CarDao implements Dao<Car> {
-    //TODO: implement UPDATE methods for multiple search terms (make,model,year,price,ownership)
     @Override
     public Optional<Car> get(long id){
         Connection connection = null;
@@ -110,8 +109,7 @@ public class CarDao implements Dao<Car> {
             StringBuilder sql = new StringBuilder("SELECT * FROM CARS WHERE ");
             int numberOfConditions = conditions.size();
             if(numberOfConditions > 0){
-                sql.append("(");
-                int i = 0;
+                int currentIndex = 0;
                 for(CarSearchQuery.Entry<CarSearchCondition, Object> condition : conditions.entrySet()){
                     switch (condition.getKey()) {
                         case OWNERSHIP:
@@ -132,26 +130,25 @@ public class CarDao implements Dao<Car> {
                         case PRICE:
                             sql.append("price=?");
                     }
-                    if(i < numberOfConditions - 1)
+                    if(currentIndex < numberOfConditions - 1)
                         sql.append(" AND ");
-                    i++;
+                    currentIndex++;
                 }
-                sql.append(")");
                 stmt = connection.prepareStatement(String.valueOf(sql));
-                i = 0;
+                currentIndex = 0;
                 for(Map.Entry<CarSearchCondition, Object> condition : conditions.entrySet()) {
                     switch (condition.getKey()) {
                         case OWNERSHIP:
                         case MAKE:
                         case MODEL:
                         case YEAR:
-                            stmt.setString(++i, condition.getValue().toString());
+                            stmt.setString(++currentIndex, condition.getValue().toString());
                             break;
                         case USER_ID:
-                            stmt.setLong(++i, Long.parseLong(condition.getValue().toString()));
+                            stmt.setLong(++currentIndex, Long.parseLong(condition.getValue().toString()));
                             break;
                         case PRICE:
-                            stmt.setDouble(++i, Double.parseDouble(condition.getValue().toString()));
+                            stmt.setDouble(++currentIndex, Double.parseDouble(condition.getValue().toString()));
                     }
                 }
             } else return getAll(); // call a no arg get if there are no search conditions
