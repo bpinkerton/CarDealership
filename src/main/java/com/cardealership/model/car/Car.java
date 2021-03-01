@@ -114,10 +114,41 @@ public class Car {
 
     @Override
     public String toString() {
-        return  "id=" + id +
-                ", make='" + make + '\'' +
-                ", model='" + model + '\'' +
-                ", year='" + year + '\'' +
-                ", price=" + price;
+        if(this.ownership.equals(Ownership.UNOWNED))
+            return String.format("" +
+                    "id= '%d'\t\t" +
+                    "ownership = '%s'\t\t" +
+                    "make= '%s'\t\t" +
+                    "model= '%s'\t\t" +
+                    "year= '%s'\t\t" +
+                    "price= $%.2f\t\t"
+                    , id, ownership, make, model, year, price
+            );
+            //            "id=" + id +
+//                ",\t make='" + make + '\'' +
+//                ",\t model='" + model + '\'' +
+//                ",\t year='" + year + '\'' +
+//                ",\t price=" + price;
+        else
+            return  String.format("" +
+                    "id= '%d'\t\t" +
+                    "ownership = '%s'\t\t\t" +
+                    "make= '%s'\t\t" +
+                    "model= '%s'\t\t" +
+                    "year= '%s'\t\t" +
+                    "price= $%.2f\t\t" +
+                    "balance= $%.2f\t\t" +
+                    "financing= '%s'"
+                    , id, ownership, make, model, year, price, balanceRemaining, financingType
+            );
+//                    "id=" + id +
+//                    ",\t ownership='" + ownership + '\'' +
+//                    ",\t make='" + make + '\'' +
+//                    ",\t model='" + model + '\'' +
+//                    ",\t year='" + year + '\'' +
+//                    ",\t price=$" + price +
+//                    ",\t balance=$" + balanceRemaining +
+//                    ",\t financing='" + financingType + '\'';
+
     }
 }

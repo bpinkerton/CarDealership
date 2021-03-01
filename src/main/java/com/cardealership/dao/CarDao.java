@@ -3,22 +3,22 @@ package com.cardealership.dao;
 import com.cardealership.model.car.Car;
 import com.cardealership.model.car.FinancingType;
 import com.cardealership.model.car.Ownership;
-import com.cardealership.model.user.AccountType;
-import com.cardealership.model.user.User;
+import com.cardealership.util.CarSearchCondition;
+import com.cardealership.util.CarSearchQuery;
+import com.cardealership.util.DealershipList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.Optional;
 
 public class CarDao implements Dao<Car> {
-    //TODO: implement GET ALL methods for multiple search terms (make,model,year,price,ownership)
     @Override
-    public Optional<Car> get(long id) throws Exception {
+    public Optional<Car> get(long id){
         Connection connection = null;
         PreparedStatement stmt = null;
-        int success = 0;
 
         try{
             connection = DAOUtilities.getConnection();
@@ -40,6 +40,134 @@ public class CarDao implements Dao<Car> {
                         FinancingType.valueOf(rs.getString("financingtype"))
                 ));
             }
+        }catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt!=null) {
+                    stmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<DealershipList<Car>> getAll(){
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        DealershipList<Car> cars = new DealershipList<>();
+
+        try{
+            connection = DAOUtilities.getConnection();
+            String sql = "SELECT * FROM CARS";
+            stmt = connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                cars.add(new Car(
+                        rs.getLong("id"),
+                        rs.getLong("userid"),
+                        Ownership.valueOf(rs.getString("ownership")),
+                        rs.getString("make"),
+                        rs.getString("model"),
+                        rs.getString("year"),
+                        rs.getDouble("price"),
+                        rs.getDouble("balanceremaining"),
+                        FinancingType.valueOf(rs.getString("financingtype"))
+                ));
+            }
+            return Optional.of(cars);
+        }catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt!=null) {
+                    stmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<DealershipList<Car>> getAll(CarSearchQuery conditions){
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        DealershipList<Car> cars = new DealershipList<>();
+
+        try{
+            connection = DAOUtilities.getConnection();
+            StringBuilder sql = new StringBuilder("SELECT * FROM CARS WHERE ");
+            int numberOfConditions = conditions.size();
+            if(numberOfConditions > 0){
+                int currentIndex = 0;
+                for(CarSearchQuery.Entry<CarSearchCondition, Object> condition : conditions.entrySet()){
+                    switch (condition.getKey()) {
+                        case OWNERSHIP:
+                            sql.append("ownership=?");
+                            break;
+                        case USER_ID:
+                            sql.append("userid=?");
+                            break;
+                        case MAKE:
+                            sql.append("make=?");
+                            break;
+                        case MODEL:
+                            sql.append("model=?");
+                            break;
+                        case YEAR:
+                            sql.append("year=?");
+                            break;
+                        case PRICE:
+                            sql.append("price=?");
+                    }
+                    if(currentIndex < numberOfConditions - 1)
+                        sql.append(" AND ");
+                    currentIndex++;
+                }
+                stmt = connection.prepareStatement(String.valueOf(sql));
+                currentIndex = 0;
+                for(Map.Entry<CarSearchCondition, Object> condition : conditions.entrySet()) {
+                    switch (condition.getKey()) {
+                        case OWNERSHIP:
+                        case MAKE:
+                        case MODEL:
+                        case YEAR:
+                            stmt.setString(++currentIndex, condition.getValue().toString());
+                            break;
+                        case USER_ID:
+                            stmt.setLong(++currentIndex, Long.parseLong(condition.getValue().toString()));
+                            break;
+                        case PRICE:
+                            stmt.setDouble(++currentIndex, Double.parseDouble(condition.getValue().toString()));
+                    }
+                }
+            } else return getAll(); // call a no arg get if there are no search conditions
+
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                cars.add(new Car(
+                        rs.getLong("id"),
+                        rs.getLong("userid"),
+                        Ownership.valueOf(rs.getString("ownership")),
+                        rs.getString("make"),
+                        rs.getString("model"),
+                        rs.getString("year"),
+                        rs.getDouble("price"),
+                        rs.getDouble("balanceremaining"),
+                        FinancingType.valueOf(rs.getString("financingtype"))
+                ));
+            }
+            return Optional.of(cars);
         }catch(SQLException e) {
             e.printStackTrace();
         } finally {
