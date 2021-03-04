@@ -1,14 +1,18 @@
 package com.cardealership.dao;
 
+import com.cardealership.util.DealershipList;
+
 import java.util.Optional;
 
-public interface Dao<T>{
+public interface Dao<T,I>{
 
-    Optional<T>  get(long id) throws Exception;
+    Optional<T> getById(I id) throws Exception;
 
-    void create(T t) throws Exception;
+    Optional<DealershipList<T>> getAll() throws Exception;
+
+    boolean create(T t) throws Exception;
 
     void update(T t) throws Exception;
 
-    void delete(T t) throws Exception;
+    void remove(I id) throws Exception;
 }

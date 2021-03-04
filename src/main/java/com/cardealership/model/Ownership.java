@@ -1,4 +1,4 @@
-package com.cardealership.model.car;
+package com.cardealership.model;
 
 public enum Ownership {
     UNOWNED,
