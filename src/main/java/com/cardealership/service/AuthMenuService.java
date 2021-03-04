@@ -1,11 +1,11 @@
 package com.cardealership.service;
 
-import com.cardealership.model.user.AccountType;
-import com.cardealership.model.user.User;
+import com.cardealership.model.AccountType;
+import com.cardealership.model.User;
 
 import java.util.Scanner;
 
-public class AuthMenuService {
+public class AuthMenuService { // AuthMenuService acts as the parent service for a user's session
     static User currentUser; // static currentUser to store the user session
     static Scanner scan;
     UserService userService;

@@ -32,7 +32,7 @@ We want to see that you can meet deadlines and that you can code. You are expect
 - [x] As an employee, I can remove a car from the lot.
 - [x] As a customer, I can view the cars that I own.
 - [ ] As a customer, I can view my remaining payments for a car.
-- [ ] As an employee, I can view all payments.
+- [ ] As an employee, I can view all remaining payments.
 - [ ] As the system, I can calculate the monthly payment.
 
 ## Implementations

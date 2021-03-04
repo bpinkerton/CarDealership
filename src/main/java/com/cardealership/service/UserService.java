@@ -2,8 +2,8 @@ package com.cardealership.service;
 
 import com.cardealership.dao.DAOUtilities;
 import com.cardealership.dao.UserDao;
-import com.cardealership.model.user.AccountType;
-import com.cardealership.model.user.User;
+import com.cardealership.model.AccountType;
+import com.cardealership.model.User;
 
 import java.util.Optional;
 

@@ -39,6 +39,10 @@ public class DealershipList <E>{
         return result.toString();
     }
 
+    public E get(int index){
+        return node(index).data;
+    }
+
     // private methods
     private void linkLast(E e){
         final Node<E> l = last;

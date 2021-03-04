@@ -1,4 +1,4 @@
-package com.cardealership.model.car;
+package com.cardealership.model;
 
 public class Car {
     private long id;
@@ -114,14 +114,14 @@ public class Car {
 
     @Override
     public String toString() {
-        if(this.ownership.equals(Ownership.UNOWNED))
+        if(!this.ownership.equals(Ownership.OWNED))
             return String.format("" +
-                    "id= '%d'\t\t" +
-                    "ownership = '%s'\t\t" +
-                    "make= '%s'\t\t" +
-                    "model= '%s'\t\t" +
-                    "year= '%s'\t\t" +
-                    "price= $%.2f\t\t"
+                    "id= '%d'\t" +
+                    "ownership = '%s'\t" +
+                    "make= '%s'\t" +
+                    "model= '%s'\t" +
+                    "year= '%s'\t" +
+                    "price= $%.2f\t"
                     , id, ownership, make, model, year, price
             );
             //            "id=" + id +
@@ -131,13 +131,13 @@ public class Car {
 //                ",\t price=" + price;
         else
             return  String.format("" +
-                    "id= '%d'\t\t" +
-                    "ownership = '%s'\t\t\t" +
-                    "make= '%s'\t\t" +
-                    "model= '%s'\t\t" +
-                    "year= '%s'\t\t" +
-                    "price= $%.2f\t\t" +
-                    "balance= $%.2f\t\t" +
+                    "id= '%d'\t" +
+                    "ownership = '%s'\t" +
+                    "make= '%s'\t" +
+                    "model= '%s'\t" +
+                    "year= '%s'\t" +
+                    "price= $%.2f\t" +
+                    "balance= $%.2f\t" +
                     "financing= '%s'"
                     , id, ownership, make, model, year, price, balanceRemaining, financingType
             );

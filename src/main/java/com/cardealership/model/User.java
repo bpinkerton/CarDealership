@@ -1,4 +1,4 @@
-package com.cardealership.model.user;
+package com.cardealership.model;
 
 public class User {
 
