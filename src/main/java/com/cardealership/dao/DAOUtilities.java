@@ -13,6 +13,7 @@ public class DAOUtilities {
     private static Connection connection;
     private static UserDao userDao;
     private static CarDao carDao;
+    private static OfferDao offerDao;
 
     public static UserDao getUserDao(){
         if(userDao == null) userDao = new UserDao();
@@ -22,6 +23,11 @@ public class DAOUtilities {
     public static CarDao getCarDao(){
         if(carDao == null) carDao = new CarDao();
         return carDao;
+    }
+
+    public static OfferDao getOfferDao(){
+        if(offerDao == null) offerDao = new OfferDao();
+        return offerDao;
     }
 
     static synchronized Connection getConnection() throws SQLException {
