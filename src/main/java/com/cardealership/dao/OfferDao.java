@@ -203,13 +203,13 @@ public class OfferDao implements Dao<Offer,Long>{
             String sql = "UPDATE OFFERS SET " +
                     "carid = ?," +
                     "userid = ?," +
-                    "offerstatus = ? " +
+                    "offer_status_type_id = ? " +
                     "WHERE id = ?";
             stmt = connection.prepareStatement(sql);
 
             stmt.setLong(1,offer.getCarId());
             stmt.setLong(2,offer.getUserId());
-            stmt.setString(3,offer.getOfferStatus().toString());
+            stmt.setInt(3,offer.getOfferStatus().ordinal());
             stmt.setLong(4,offer.getId());
 
             success = stmt.executeUpdate();

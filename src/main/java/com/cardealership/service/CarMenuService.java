@@ -5,6 +5,7 @@ import com.cardealership.model.Offer;
 import com.cardealership.model.User;
 import com.cardealership.util.DealershipList;
 
+import java.util.Locale;
 import java.util.Scanner;
 
 public class CarMenuService {
@@ -76,8 +77,6 @@ public class CarMenuService {
 
     //TODO: add following employee menu options
     /*
-        4) View All Offers
-        5) Accept or Reject an Offer
         6) View all Payments
      */
 
@@ -86,6 +85,7 @@ public class CarMenuService {
         System.out.println("\t\t\t2) Add a New Car to the Lot");
         System.out.println("\t\t\t3) Remove a Car from the Lot");
         System.out.println("\t\t\t4) View All Offers");
+        System.out.println("\t\t\t5) Accept an Offer");
 
         System.out.println("\t\t\t0) Log Out");
         switch(scan.nextLine()){
@@ -97,13 +97,30 @@ public class CarMenuService {
                 break;
             case "4": printAllOffers();
                 break;
+            case "5": acceptOffer();
+                break;
             case "0": logOut();
                 break;
         }
     }
 
+    private void acceptOffer() {
+        long offerId;
+
+        System.out.println("\t\tYou'd like to Accept an Offer.");
+        System.out.println("\t\tThis will REJECT all other Offers for this car.");
+        System.out.println("\t\tWould you like to proceed? (y/n)");
+        if(scan.nextLine().equalsIgnoreCase("y")){
+            System.out.println("\t\tPlease enter the following:");
+            System.out.print("\t\t\tOfferId: ");
+            offerId = Long.parseLong(scan.nextLine());
+            if(offerService.acceptOffer(offerId))
+                System.out.println("\t\tOffer accepted successfully.");
+        }
+    }
+
     private void printAllOffers() {
-        DealershipList<Offer> offers = offerService.getAllOffers();
+        DealershipList<Offer> offers = offerService.getOpenOffers();
         if(offers.size() > 0) System.out.println(offers);
         else System.out.println("\t\tNo offers were found");
     }
