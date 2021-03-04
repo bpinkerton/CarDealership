@@ -25,11 +25,11 @@ We want to see that you can meet deadlines and that you can code. You are expect
 - [x] As a user, I can login.
 - [x] As an employee, I can add a car to the lot.
 - [x] As a customer, I can view the cars on the lot.
-- [ ] As a customer, I can make an offer for a car.
-- [ ] As an employee, I can accept or reject an offer for a car.
-- [ ] As the system, I reject all other pending offers for a car when an offer is accepted.
+- [x] As a customer, I can make an offer for a car.
+- [x] As an employee, I can accept or reject an offer for a car.
+- [x] As the system, I reject all other pending offers for a car when an offer is accepted.
 - [x] As a user, I can register for a customer account.
-- [ ] As an employee, I can remove a car from the lot.
+- [x] As an employee, I can remove a car from the lot.
 - [x] As a customer, I can view the cars that I own.
 - [ ] As a customer, I can view my remaining payments for a car.
 - [ ] As an employee, I can view all payments.
