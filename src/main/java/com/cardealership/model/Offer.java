@@ -59,9 +59,9 @@ public class Offer {
     @Override
     public String toString() {
         return String.format("" +
-                        "id= '%d'\t\t" +
-                        "carId = '%d'\t\t" +
-                        "userId= '%d'\t\t" +
+                        "id= '%d'     \t\t" +
+                        "carId = '%d'     \t\t" +
+                        "userId= '%d'     \t\t" +
                         "offerStatus= '%s'"
                 , id, carId, userId, offerStatus
         );
