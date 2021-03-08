@@ -14,6 +14,8 @@ public class DAOUtilities {
     private static UserDao userDao;
     private static CarDao carDao;
     private static OfferDao offerDao;
+    private static FinanceAccountDAO financeAccountDAO;
+    private static PaymentDAO paymentDAO;
 
     public static UserDao getUserDao(){
         if(userDao == null) userDao = new UserDao();
@@ -28,6 +30,16 @@ public class DAOUtilities {
     public static OfferDao getOfferDao(){
         if(offerDao == null) offerDao = new OfferDao();
         return offerDao;
+    }
+
+    public static FinanceAccountDAO getFinanceAccountDAO(){
+        if(financeAccountDAO == null) financeAccountDAO = new FinanceAccountDAO();
+        return financeAccountDAO;
+    }
+
+    public static PaymentDAO getPaymentDAO(){
+        if(paymentDAO == null) paymentDAO = new PaymentDAO();
+        return paymentDAO;
     }
 
     static synchronized Connection getConnection() throws SQLException {

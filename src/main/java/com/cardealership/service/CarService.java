@@ -3,12 +3,14 @@ package com.cardealership.service;
 import com.cardealership.dao.CarDao;
 import com.cardealership.dao.DAOUtilities;
 import com.cardealership.model.Car;
+import com.cardealership.model.OwnedCar;
 import com.cardealership.model.Ownership;
 import com.cardealership.util.CarSearchCondition;
 import com.cardealership.util.DealershipList;
 import com.cardealership.util.SearchQuery;
 
 import java.util.Optional;
+import java.util.Stack;
 
 public class CarService {
     private CarDao carDao = DAOUtilities.getCarDao();
@@ -24,6 +26,11 @@ public class CarService {
         return result.orElse(null);
     }
 
+    public double getPriceById(long carId){
+        Optional<Car> result = get(carId);
+        return result.map(Car::getPrice).orElse(-1.0);
+    }
+
     public DealershipList<Car> getAllCars(){
         Optional<DealershipList<Car>> result = getAll();
         return result.orElse(null);
@@ -34,10 +41,9 @@ public class CarService {
         return result.orElse(null);
     }
 
-    public DealershipList<Car> getMyCars(long userId){
-        DealershipList<SearchQuery<CarSearchCondition>> query = new DealershipList<>();
-        query.add(new SearchQuery<>(CarSearchCondition.USER_ID, userId));
-        Optional<DealershipList<Car>> result = getAll(query);
+    public DealershipList<OwnedCar> getMyCars(long userId){
+
+        Optional<DealershipList<OwnedCar>> result = getAllByOwnerId(userId);
         return result.orElse(null);
     }
 
@@ -91,6 +97,16 @@ public class CarService {
     private Optional<DealershipList<Car>> getAll(){
         try{
             Optional<DealershipList<Car>> result = carDao.getAll();
+            if(result.isPresent()) return result;
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return Optional.empty();
+    }
+
+    private Optional<DealershipList<OwnedCar>> getAllByOwnerId(long ownerId){
+        try{
+            Optional<DealershipList<OwnedCar>> result = carDao.getAllByOwnerId(ownerId);
             if(result.isPresent()) return result;
         } catch(Exception e){
             e.printStackTrace();

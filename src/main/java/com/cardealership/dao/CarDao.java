@@ -1,8 +1,6 @@
 package com.cardealership.dao;
 
-import com.cardealership.model.Car;
-import com.cardealership.model.FinancingType;
-import com.cardealership.model.Ownership;
+import com.cardealership.model.*;
 import com.cardealership.util.CarSearchCondition;
 import com.cardealership.util.DealershipList;
 import com.cardealership.util.SearchQuery;
@@ -34,9 +32,7 @@ public class CarDao implements Dao<Car,Long> {
                         rs.getString("make"),
                         rs.getString("model"),
                         rs.getString("year"),
-                        rs.getDouble("price"),
-                        rs.getDouble("balanceremaining"),
-                        FinancingType.values()[rs.getInt("financingtypeid")]
+                        rs.getDouble("price")
                 ));
             }
         }catch(SQLException e) {
@@ -75,9 +71,7 @@ public class CarDao implements Dao<Car,Long> {
                         rs.getString("make"),
                         rs.getString("model"),
                         rs.getString("year"),
-                        rs.getDouble("price"),
-                        rs.getDouble("balanceremaining"),
-                        FinancingType.values()[rs.getInt("financingtypeid")]
+                        rs.getDouble("price")
                 ));
             }
             return Optional.of(cars);
@@ -161,9 +155,7 @@ public class CarDao implements Dao<Car,Long> {
                         rs.getString("make"),
                         rs.getString("model"),
                         rs.getString("year"),
-                        rs.getDouble("price"),
-                        rs.getDouble("balanceremaining"),
-                        FinancingType.values()[rs.getInt("financingtypeid")]
+                        rs.getDouble("price")
                 ));
             }
             return Optional.of(cars);
@@ -203,9 +195,61 @@ public class CarDao implements Dao<Car,Long> {
                         rs.getString("make"),
                         rs.getString("model"),
                         rs.getString("year"),
+                        rs.getDouble("price")
+                ));
+            }
+            return Optional.of(cars);
+        }catch(SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if(stmt!=null) {
+                    stmt.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return Optional.empty();
+    }
+
+    public Optional<DealershipList<OwnedCar>> getAllByOwnerId(Long id){
+        Connection connection = null;
+        PreparedStatement stmt = null;
+        DealershipList<OwnedCar> cars = new DealershipList<>();
+
+        try{
+            connection = DAOUtilities.getConnection();
+            String sql = "SELECT cars.id as carid, cars.userid, cars.ownershipid, cars.make, cars.model," +
+                    " cars.year, cars.price, finance_accounts.* " +
+                    "FROM CARS LEFT JOIN FINANCE_ACCOUNTS ON CARS.ID = FINANCE_ACCOUNTS.CARID WHERE CARS.USERID=?";
+            stmt = connection.prepareStatement(sql);
+            stmt.setLong(1,id);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()){
+                cars.add(new OwnedCar(
+                        rs.getLong("carid"),
+                        rs.getLong("userid"),
+                        Ownership.values()[rs.getInt("ownershipid")],
+                        rs.getString("make"),
+                        rs.getString("model"),
+                        rs.getString("year"),
                         rs.getDouble("price"),
-                        rs.getDouble("balanceremaining"),
-                        FinancingType.values()[rs.getInt("financingtypeid")]
+                        new FinanceAccount(
+                                rs.getLong("id"),
+                                rs.getLong("carid"),
+                                rs.getLong("userid"),
+                                FinancingType.values()[rs.getInt("financing_type_id")],
+                                rs.getDouble("starting_balance"),
+                                rs.getDouble("current_balance"),
+                                rs.getInt("total_payments"),
+                                rs.getInt("payments_made"),
+                                rs.getDouble("payment_amount")
+                        )
                 ));
             }
             return Optional.of(cars);
@@ -240,10 +284,8 @@ public class CarDao implements Dao<Car,Long> {
                     "make," +
                     "model," +
                     "year," +
-                    "price," +
-                    "balanceremaining," +
-                    "financingtypeid)" +
-                    " VALUES (?,?,?,?,?,?,?,?)";
+                    "price)" +
+                    " VALUES (?,?,?,?,?,?)";
 
             stmt = connection.prepareStatement(sql);
 
@@ -253,8 +295,6 @@ public class CarDao implements Dao<Car,Long> {
             stmt.setString(4, car.getModel());
             stmt.setString(5, car.getYear());
             stmt.setDouble(6, car.getPrice());
-            stmt.setDouble(7, car.getBalanceRemaining());
-            stmt.setInt(8, car.getFinancingType().ordinal());
 
             success = stmt.executeUpdate();
             if(success != 0)
@@ -288,10 +328,8 @@ public class CarDao implements Dao<Car,Long> {
                     "make = ?," +
                     "model = ?," +
                     "year = ?," +
-                    "price = ?," +
-                    "balanceremaining = ?," +
-                    "financingtypeid = ? " +
-                    "WHERE id= ?";
+                    "price = ?" +
+                    "WHERE id = ?";
 
             stmt = connection.prepareStatement(sql);
 
@@ -301,9 +339,7 @@ public class CarDao implements Dao<Car,Long> {
             stmt.setString(4, car.getModel());
             stmt.setString(5, car.getYear());
             stmt.setDouble(6, car.getPrice());
-            stmt.setDouble(7, car.getBalanceRemaining());
-            stmt.setInt(8, car.getFinancingType().ordinal());
-            stmt.setLong(9, car.getId());
+            stmt.setLong(7, car.getId());
 
             success = stmt.executeUpdate();
         }catch(Exception e){
