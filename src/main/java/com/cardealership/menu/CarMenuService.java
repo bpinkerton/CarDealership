@@ -1,6 +1,10 @@
-package com.cardealership.service;
+package com.cardealership.menu;
 
+import com.cardealership.menu.AuthMenuService;
 import com.cardealership.model.*;
+import com.cardealership.service.CarService;
+import com.cardealership.service.FinancingService;
+import com.cardealership.service.OfferService;
 import com.cardealership.util.DealershipList;
 
 import java.util.Scanner;
@@ -20,7 +24,7 @@ public class CarMenuService {
     }
 
     private void menuDriver() {
-        System.out.println("\t\tWhat would you like to do?");
+        System.out.println("\n\t\tWhat would you like to do?");
         switch (currentUser.getAccountType()){
             case CUSTOMER:      customerMenu();
                 break;
@@ -79,11 +83,8 @@ public class CarMenuService {
         System.out.println("\t\tPlease enter the following:");
         System.out.print("\t\t\tCarId: ");
         carId = Long.parseLong(scan.nextLine());
-        if((report = financingService.getCarFinanceReport(carId)) != null)
+        if((report = financingService.getMyCarFinanceReport(carId, currentUser.getId())) != null)
             System.out.println(report);
-        else
-            System.out.println("\t\tCould not find the Finance Account for that Car.\n" +
-                    "\t\tPlease create a financing account and try again.\n");
     }
 
     private void financeAccountPrompt() {

@@ -30,7 +30,7 @@ public class FinanceAccountDAO implements Dao <FinanceAccount, Long> {
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        FinancingType.values()[rs.getInt("financing_type_id")],
+                        FinancingType.values()[rs.getInt("financingid")],
                         rs.getDouble("starting_balance"),
                         rs.getDouble("current_balance"),
                         rs.getInt("total_payments"),
@@ -71,7 +71,7 @@ public class FinanceAccountDAO implements Dao <FinanceAccount, Long> {
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        FinancingType.values()[rs.getInt("financing_type_id")],
+                        FinancingType.values()[rs.getInt("financingid")],
                         rs.getDouble("starting_balance"),
                         rs.getDouble("current_balance"),
                         rs.getInt("total_payments"),
@@ -113,7 +113,7 @@ public class FinanceAccountDAO implements Dao <FinanceAccount, Long> {
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        FinancingType.values()[rs.getInt("financing_type_id")],
+                        FinancingType.values()[rs.getInt("financingid")],
                         rs.getDouble("starting_balance"),
                         rs.getDouble("current_balance"),
                         rs.getInt("total_payments"),
@@ -156,7 +156,7 @@ public class FinanceAccountDAO implements Dao <FinanceAccount, Long> {
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        FinancingType.values()[rs.getInt("financing_type_id")],
+                        FinancingType.values()[rs.getInt("financingid")],
                         rs.getDouble("starting_balance"),
                         rs.getDouble("current_balance"),
                         rs.getInt("total_payments"),
@@ -199,7 +199,7 @@ public class FinanceAccountDAO implements Dao <FinanceAccount, Long> {
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        FinancingType.values()[rs.getInt("financing_type_id")],
+                        FinancingType.values()[rs.getInt("financingid")],
                         rs.getDouble("starting_balance"),
                         rs.getDouble("current_balance"),
                         rs.getInt("total_payments"),
@@ -235,7 +235,7 @@ public class FinanceAccountDAO implements Dao <FinanceAccount, Long> {
             String sql = "INSERT INTO FINANCE_ACCOUNTS (" +
                     "carid," +
                     "userid," +
-                    "financing_type_id," +
+                    "financingid," +
                     "starting_balance," +
                     "current_balance," +
                     "total_payments," +
@@ -281,7 +281,7 @@ public class FinanceAccountDAO implements Dao <FinanceAccount, Long> {
             String sql = "UPDATE FINANCE_ACCOUNTS SET " +
                     "carid = ?," +
                     "userid = ?," +
-                    "financing_type_id = ?," +
+                    "financingid = ?," +
                     "starting_balance = ?," +
                     "current_balance = ?," +
                     "total_payments = ?," +

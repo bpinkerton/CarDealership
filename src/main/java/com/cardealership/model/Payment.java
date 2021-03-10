@@ -1,9 +1,14 @@
 package com.cardealership.model;
 
+import com.enterprise.annotations.TestClass;
+import com.enterprise.annotations.TestMethod;
+
 public class Payment {
     private long id;
     private long financingAccountId;
     private double paymentAmount;
+
+    public Payment(){};
 
     public Payment(long id, long financingAccountId, double paymentAmount) {
         this.id = id;

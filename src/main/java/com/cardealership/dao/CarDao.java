@@ -243,7 +243,7 @@ public class CarDao implements Dao<Car,Long> {
                                 rs.getLong("id"),
                                 rs.getLong("carid"),
                                 rs.getLong("userid"),
-                                FinancingType.values()[rs.getInt("financing_type_id")],
+                                FinancingType.values()[rs.getInt("financingid")],
                                 rs.getDouble("starting_balance"),
                                 rs.getDouble("current_balance"),
                                 rs.getInt("total_payments"),

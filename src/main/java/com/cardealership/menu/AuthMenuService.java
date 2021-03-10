@@ -1,7 +1,8 @@
-package com.cardealership.service;
+package com.cardealership.menu;
 
 import com.cardealership.model.AccountType;
 import com.cardealership.model.User;
+import com.cardealership.service.UserService;
 
 import java.util.Scanner;
 
@@ -34,7 +35,7 @@ public class AuthMenuService { // AuthMenuService acts as the parent service for
     }
 
     private void registrationMenu() {
-        System.out.println("\t\tWhat would you like to do?");
+        System.out.println("\n\t\tWhat would you like to do?");
         System.out.println("\t\t\t1) Register");
         System.out.println("\t\t\t2) Login");
         System.out.println("\t\t\t0) Exit");
@@ -63,14 +64,6 @@ public class AuthMenuService { // AuthMenuService acts as the parent service for
         }
     }
 
-    private void customerMenu() {
-
-    }
-
-    private void employeeMenu() {
-
-    }
-
     private void register(){
         String firstName,lastName,email,password;
         do{
@@ -95,23 +88,26 @@ public class AuthMenuService { // AuthMenuService acts as the parent service for
 
     private void loginMenu() {
         String email,password;
-        do{
-            System.out.println("\t\tPlease enter the following:");
-            System.out.print("\t\t\tEmail: ");
-            email = scan.nextLine();
-            System.out.print("\t\t\tPassword: ");
-            password = scan.nextLine();
-        } while(!login(email,password));
-        System.out.println("\t\tLogged in successfully.");
-        System.out.println("\t\t\tHello, " + currentUser.getFirstName() +"!");
+        System.out.println("\t\tPlease enter the following:");
+        System.out.print("\t\t\tEmail: ");
+        email = scan.nextLine();
+        System.out.print("\t\t\tPassword: ");
+        password = scan.nextLine();
+        login(email,password);
     }
 
-    private boolean login(String email, String password){
-        return (currentUser = userService.logIn(email,password)) != null;
+    private void login(String email, String password){
+        User temp;
+        if((temp = userService.logIn(email,password)) != null){
+            currentUser = temp;
+            System.out.println("\t\tLogged in successfully.");
+            System.out.println("\t\t\tHello, " + currentUser.getFirstName() +"!");
+        }else
+            System.out.println("\t\tCould not validate your credentials.");
     }
 
     private void refreshSession(){
-        currentUser = userService.logIn(currentUser.getEmail(), currentUser.getPassword());
+        currentUser = userService.getUserByEmail(currentUser.getEmail());
     }
 
     private void logOut(){

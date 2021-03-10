@@ -1,25 +1,20 @@
-import com.cardealership.dao.CarDao;
-import com.cardealership.dao.DAOUtilities;
-import com.cardealership.dao.FinanceAccountDAO;
-import com.cardealership.model.FinanceAccount;
-import com.cardealership.model.FinancingType;
-import com.cardealership.model.OwnedCar;
-import com.cardealership.service.AuthMenuService;
-import com.cardealership.util.DealershipList;
+import com.cardealership.menu.AuthMenuService;
+import com.cardealership.model.User;
+import com.cardealership.service.CarService;
+import com.cardealership.service.UserService;
+import com.enterprise.model.MetaTestData;
+import com.enterprise.util.HashMap;
+import com.enterprise.util.TestDiscovery;
 
-import java.util.Optional;
+import javax.xml.bind.DatatypeConverter;
+import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Map;
 
 public class Driver {
     public static void main(String[] args) throws Exception {
-        new AuthMenuService().mainMenu();
-//        CarDao dao = DAOUtilities.getCarDao();
-//
-//        try{
-//            Optional<DealershipList<OwnedCar>> cars = dao.getAllByOwnerId(1L);
-//            cars.ifPresent(System.out::println);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-
+        HashMap<Method, MetaTestData> results = new TestDiscovery().runAndStoreTestInformation();
+        System.out.println(results);
     }
 }

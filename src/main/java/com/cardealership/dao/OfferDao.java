@@ -30,7 +30,7 @@ public class OfferDao implements Dao<Offer,Long>{
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        OfferStatus.values()[rs.getInt("offer_Status_type_id")]
+                        OfferStatus.values()[rs.getInt("offerstatusid")]
                 ));
             }
         }catch(SQLException e) {
@@ -65,7 +65,7 @@ public class OfferDao implements Dao<Offer,Long>{
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        OfferStatus.values()[rs.getInt("offer_Status_type_id")]
+                        OfferStatus.values()[rs.getInt("offerstatusid")]
                 ));
             }
             return Optional.of(offers);
@@ -106,7 +106,7 @@ public class OfferDao implements Dao<Offer,Long>{
                             sql.append("userid=?");
                             break;
                         case OFFER_STATUS:
-                            sql.append("offer_Status_type_id=?");
+                            sql.append("offerstatusid=?");
                             break;
                     }
                     if(currentIndex < numberOfConditions - 1)
@@ -134,7 +134,7 @@ public class OfferDao implements Dao<Offer,Long>{
                         rs.getLong("id"),
                         rs.getLong("carid"),
                         rs.getLong("userid"),
-                        OfferStatus.values()[rs.getInt("offer_Status_type_id")]
+                        OfferStatus.values()[rs.getInt("offerstatusid")]
                 ));
             }
             return Optional.of(offers);
@@ -166,7 +166,7 @@ public class OfferDao implements Dao<Offer,Long>{
             String sql = "INSERT INTO OFFERS (" +
                     "carid," +
                     "userid," +
-                    "offer_status_type_id)" +
+                    "offerstatusid)" +
                     " VALUES (?,?,?)";
             stmt = connection.prepareStatement(sql);
 
@@ -203,7 +203,7 @@ public class OfferDao implements Dao<Offer,Long>{
             String sql = "UPDATE OFFERS SET " +
                     "carid = ?," +
                     "userid = ?," +
-                    "offer_status_type_id = ? " +
+                    "offerstatusid = ? " +
                     "WHERE id = ?";
             stmt = connection.prepareStatement(sql);
 

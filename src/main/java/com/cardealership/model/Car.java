@@ -1,5 +1,9 @@
 package com.cardealership.model;
 
+import com.enterprise.annotations.TestClass;
+import com.enterprise.annotations.TestMethod;
+
+
 public class Car {
     private long id;
     private long userId;
@@ -96,10 +100,10 @@ public class Car {
     public String toString() {
         return String.format("" +
                 "id= '%4d'\t" +
-                "ownership = '%s'  \t" +
-                "make= '%s'\t" +
-                "model= '%s'\t" +
-                "year= '%s'\t" +
+                "ownership = '%7s'  \t" +
+                "make= '%7s'\t" +
+                "model= '%12s'\t" +
+                "year= '%4s'\t" +
                 "price= $%10.2f\t"
                 , id, ownership, make, model, year, price
         );

@@ -28,7 +28,7 @@ public class UserDao implements Dao<User,Long>{
             if(rs.next()){
                 return Optional.of(new User(
                         rs.getLong("id"),
-                        AccountType.values()[rs.getInt("accounttypeid")],
+                        AccountType.values()[rs.getInt("account_type_id")],
                         rs.getString("firstname"),
                         rs.getString("lastname"),
                         rs.getString("email"),
@@ -72,7 +72,7 @@ public class UserDao implements Dao<User,Long>{
             if(rs.next()){
                 return Optional.of(new User(
                         rs.getLong("id"),
-                        AccountType.values()[rs.getInt("accounttypeid")],
+                        AccountType.values()[rs.getInt("account_type_id")],
                         rs.getString("firstname"),
                         rs.getString("lastname"),
                         rs.getString("email"),
@@ -105,12 +105,12 @@ public class UserDao implements Dao<User,Long>{
         try{
             connection = DAOUtilities.getConnection();
             String sql = "INSERT INTO USERS (" +
-                    "accounttypeid," +
+                    "account_type_id," +
                     "firstname," +
                     "lastname," +
                     "email," +
                     "password)" +
-                    " VALUES (?,?,?,?,?)";
+                    " VALUES (?,?,?,?,encrypt_password(?))";
             stmt = connection.prepareStatement(sql);
 
             stmt.setInt(1, user.getAccountType().ordinal());
@@ -146,7 +146,7 @@ public class UserDao implements Dao<User,Long>{
         try{
             connection = DAOUtilities.getConnection();
             String sql = "UPDATE USERS SET " +
-                    "accounttypeid = ?," +
+                    "account_type_id = ?," +
                     "firstname = ?," +
                     "lastname = ?," +
                     "email = ?," +

@@ -36,6 +36,16 @@ public class FinancingService {
         return result.orElse(null);
     }
 
+    public FinanceAccount getMyCarFinanceReport(long carId, long userId){
+        Optional<FinanceAccount> result = getByCarId(carId);
+        if(result.isPresent()){
+            if(result.get().getUserId() == userId){
+                return result.get();
+            } else System.out.println("\t\tThis is not your car.");
+        } else System.out.println("\t\tThis car does not have a financing account set up.");
+        return null;
+    }
+
     public boolean makeAPayment(long carId, long userId){
 
         FinanceAccount account = getCarFinanceReport(carId);
